@@ -15,7 +15,7 @@ public partial class MainWindow : Window
 
         InitializeComponent();
         DataContext = viewModel;
-        Title = $"{App.Name} v{App.Version}";
+        Title = $"{App.Name} v{App.VersionString}";
 
         Loaded += async (s, e) => await ((MainWindowViewModel)DataContext).UpdateCheck();
     }
