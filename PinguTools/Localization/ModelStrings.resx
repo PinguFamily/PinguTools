@@ -162,4 +162,7 @@
     <data name="Display_NotesFieldLine" xml:space="preserve">
         <value>Notes Field Line Color</value>
     </data>
+    <data name="Description_DisplayBPM" xml:space="preserve">
+        <value>BPM displayed in song selection menu</value>
+    </data>
 </root>

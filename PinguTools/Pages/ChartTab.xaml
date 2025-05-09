@@ -34,6 +34,7 @@
                             <system:String>Designer</system:String>
                             <system:String>Difficulty</system:String>
                             <system:String>Id</system:String>
+                            <system:String>MainBpm</system:String>
                             <system:String>BgmEnableBarOffset</system:String>
                         </local:MetaPropertyGrid.Whitelist>
                         <b:Interaction.Behaviors>

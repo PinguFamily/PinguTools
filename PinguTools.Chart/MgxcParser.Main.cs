@@ -158,7 +158,7 @@ public partial class MgxcParser
         else if (noteName is 'H' or 'S') // AirHold should be considered as AirSlide after CHUNITHM NEW
         {
             if (args[1] == "BG")
-            {
+            { 
                 var exNote = new mgxc.AirSlide();
                 isPairNote = true;
 
@@ -253,8 +253,7 @@ public partial class MgxcParser
                     lastN.MakePair(newP);
                     break;
                 default:
-                    diagnostic.Report(DiagnosticSeverity.Error, Strings.Diag_pairing_notes_incompatible, note);
-                    diagnostic.Report(DiagnosticSeverity.Error, Strings.Diag_pairing_notes_incompatible, lastNote);
+                    diagnostic.Report(DiagnosticSeverity.Error, Strings.Diag_pairing_notes_incompatible, new List<mgxc.Note?> { note, lastNote });
                     break;
             }
         }

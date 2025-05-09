@@ -179,7 +179,7 @@
         <value>开头添加空白小节</value>
     </data>
     <data name="Description_InsertBlankMeasure" xml:space="preserve">
-    <value>需通过 Margrete 配置。启用后将在谱面和音乐开头添加一个空白小节。</value>
+    <value>请在 Margrete 中设置此项目 (Insert a blank bar before the first measure)。启用后将在谱面和音乐开头添加一个空白小节。</value>
 </data>
     <data name="Display_BgmInitialBpm" xml:space="preserve">
     <value>初始 BPM</value>
@@ -217,8 +217,8 @@
     <value>发布时间</value>
 </data>
     <data name="Display_DisplayBPM" xml:space="preserve">
-    <value>显示 BPM</value>
-</data>
+        <value>显示 BPM</value>
+    </data>
     <!-- World's End -->
     <data name="Category_WorldsEnd" xml:space="preserve">
     <value>World's End</value>
@@ -263,5 +263,8 @@
     </data>
     <data name="Display_NotesFieldLine" xml:space="preserve">
         <value>轨道线颜色</value>
+    </data>
+    <data name="Description_DisplayBPM" xml:space="preserve">
+        <value>选曲界面中显示的BPM</value>
     </data>
 </root>

@@ -72,6 +72,7 @@ public partial class WorkflowModel : MusicModel
 
     [LocalizableCategory(nameof(ModelStrings.Category_Chart), typeof(ModelStrings))]
     [LocalizableDisplayName(nameof(ModelStrings.Display_DisplayBPM), typeof(ModelStrings))]
+    [LocalizableDescription(nameof(ModelStrings.Description_DisplayBPM), typeof(ModelStrings))]
     [DisplayFormat(DataFormatString = "{0:F6}")]
     [ObservableProperty]
     [PropertyOrder(6)]

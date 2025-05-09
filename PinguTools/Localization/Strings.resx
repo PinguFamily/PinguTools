@@ -157,4 +157,7 @@
     <data name="Button_Show_Details" xml:space="preserve">
     <value>Show Details</value>
   </data>
+    <data name="Label_Background" xml:space="preserve">
+    <value>Background (1920×1080): </value>
+  </data>
 </root>

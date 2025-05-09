@@ -259,4 +259,7 @@
     <data name="Label_Culprit" xml:space="preserve">
     <value>起因</value>
   </data>
+    <data name="Label_Background" xml:space="preserve">
+    <value>背景 (1920×1080): </value>
+  </data>
 </root>

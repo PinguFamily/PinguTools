@@ -150,6 +150,15 @@ namespace PinguTools.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BPM displayed in song selection menu.
+        /// </summary>
+        public static string Description_DisplayBPM {
+            get {
+                return ResourceManager.GetString("Description_DisplayBPM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure this through Margrete. If enabled, a silent measure with click cues is inserted at the beginning, ensuring that the first musical measure follows the blank..
         /// </summary>
         public static string Description_InsertBlankMeasure {

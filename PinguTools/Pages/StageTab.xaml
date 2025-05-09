@@ -25,7 +25,7 @@
                 </Style>
             </StackPanel.Resources>
             <local:FilePicker
-                Label="Background (1920×1080): "
+                Label="{x:Static localization:Strings.Label_Background}"
                 Margin="0,0,0,0"
                 Path="{Binding BackgroundPath}"
                 Required="True" />

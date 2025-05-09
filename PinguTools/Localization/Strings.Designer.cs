@@ -159,6 +159,15 @@ namespace PinguTools.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background (1920×1080): .
+        /// </summary>
+        public static string Label_Background {
+            get {
+                return ResourceManager.GetString("Label_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart: .
         /// </summary>
         public static string Label_Chart {
