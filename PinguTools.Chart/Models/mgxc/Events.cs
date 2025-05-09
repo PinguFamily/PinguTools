@@ -2,13 +2,6 @@
 
 public class Event : TimeNode<Event>
 {
-    public T Clone<T>(Event? parent = null) where T : Event
-    {
-        var e = (T)MemberwiseClone();
-        e.MakeVirtual(parent);
-        return e;
-    }
-
     public override void Sort()
     {
         SortChild((a, b) => a.Tick.CompareTo(b.Tick));

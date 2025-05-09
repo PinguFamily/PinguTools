@@ -118,8 +118,7 @@ public partial class MgxcParser(IReadOnlyCollection<Entry>? weTags)
         if (mgxc.Meta.BgmEnableBarOffset)
         {
             var offset = (int)Math.Round((decimal)Time.MarResolution / initBeat.Denominator * initBeat.Numerator);
-            var initialEvents = mgxc.Events.Children.Where(p => p.Tick == 0).Select(p => p.Clone<mgxc.Event>()).ToList();
-            foreach (var e in mgxc.Events.Children)
+            foreach (var e in mgxc.Events.Children.Where(e => e.Tick != 0))
             {
                 e.Offset(offset);
                 if (e is mgxc.BeatEvent beatEvent) beatEvent.Bar += 1;
@@ -127,10 +126,6 @@ public partial class MgxcParser(IReadOnlyCollection<Entry>? weTags)
             foreach (var note in mgxc.Notes.Children)
             {
                 note.Offset(offset);
-            }
-            foreach (var e in initialEvents)
-            {
-                mgxc.Events.AppendChild(e);
             }
         }
 
@@ -165,7 +160,7 @@ public partial class MgxcParser(IReadOnlyCollection<Entry>? weTags)
             var str = string.Join(", ", effects.Select(e => e.ToString()));
             diagnostic.Report(DiagnosticSeverity.Information, string.Format(Strings.Diag_concurrent_ex_effects, tick.Original, str), tick);
         }
-        
+
         mgxc.Notes.Sort();
     }
 
