@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Reflection;
 
-namespace PinguTools.Misc;
+namespace PinguTools.Converters;
 
 public sealed class EnumDescriptionConverter(Type type) : EnumConverter(type)
 {

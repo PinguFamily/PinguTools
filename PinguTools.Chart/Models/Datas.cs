@@ -9,16 +9,6 @@ public readonly record struct Position(int Measure, int Offset);
 
 public readonly record struct Time(int Original) : IComparable<Time>
 {
-    public bool Equals(Time other)
-    {
-        return Original == other.Original;
-    }
-
-    public override int GetHashCode()
-    {
-        return Original;
-    }
-
     public const int MarResolution = 1920;
     public const int CtsResolution = 384;
     public const int SingleTick = MarResolution / CtsResolution;
@@ -29,14 +19,24 @@ public readonly record struct Time(int Original) : IComparable<Time>
 
     public Position Position => new(Round / MarResolution, (int)(Round % MarResolution * FACTOR));
 
-    public override string ToString()
-    {
-        return Original == Round ? $"[{Original}→{Result}]" : $"[{Original}→{Round}→{Result}]";
-    }
-
     public int CompareTo(Time other)
     {
         return Original.CompareTo(other.Original);
+    }
+
+    public bool Equals(Time other)
+    {
+        return Original == other.Original;
+    }
+
+    public override int GetHashCode()
+    {
+        return Original;
+    }
+
+    public override string ToString()
+    {
+        return Original == Round ? $"[{Original}→{Result}]" : $"[{Original}→{Round}→{Result}]";
     }
 
     public static Time operator -(Time a, Time b)

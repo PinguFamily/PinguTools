@@ -2,8 +2,6 @@
 
 public class DiagnosticException : Exception
 {
-    public object? Target { get; }
-
     public DiagnosticException(string message, object? target = null) : base(message)
     {
         Target = target;
@@ -13,4 +11,6 @@ public class DiagnosticException : Exception
     {
         Target = target;
     }
+
+    public object? Target { get; }
 }

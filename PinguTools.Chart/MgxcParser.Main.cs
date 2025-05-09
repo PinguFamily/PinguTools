@@ -158,7 +158,7 @@ public partial class MgxcParser
         else if (noteName is 'H' or 'S') // AirHold should be considered as AirSlide after CHUNITHM NEW
         {
             if (args[1] == "BG")
-            { 
+            {
                 var exNote = new mgxc.AirSlide();
                 isPairNote = true;
 

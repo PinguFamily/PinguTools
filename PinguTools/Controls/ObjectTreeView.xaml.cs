@@ -15,13 +15,6 @@ public partial class ObjectTreeView : UserControl
         InitializeComponent();
     }
 
-    private static void OnObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        var tree = ObjectTreeNode.CreateTree(e.NewValue);
-        if (d is not ObjectTreeView otv) return;
-        otv.TreeNodes = [tree];
-    }
-
     public object SelectedObject
     {
         get => GetValue(SelectedObjectProperty);
@@ -33,18 +26,24 @@ public partial class ObjectTreeView : UserControl
         get => (List<ObjectTreeNode>)GetValue(TreeNodesProperty);
         set => SetValue(TreeNodesProperty, value);
     }
+
+    private static void OnObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var tree = ObjectTreeNode.CreateTree(e.NewValue);
+        if (d is not ObjectTreeView otv) return;
+        otv.TreeNodes = [tree];
+    }
 }
 
 public class ObjectTreeNode
 {
-    public string Name { get; set; } = string.Empty;
-    public string? Value { get; set; }
-    public List<ObjectTreeNode> Children { get; set; } = [];
-
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         ReferenceHandler = ReferenceHandler.IgnoreCycles
     };
+    public string Name { get; set; } = string.Empty;
+    public string? Value { get; set; }
+    public List<ObjectTreeNode> Children { get; set; } = [];
 
     public static ObjectTreeNode CreateTree(object obj, string? rootName = null)
     {

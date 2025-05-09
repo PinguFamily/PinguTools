@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace PinguTools.Common;
+﻿namespace PinguTools.Common;
 
 public enum DiagnosticSeverity
 {

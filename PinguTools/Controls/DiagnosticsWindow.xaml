@@ -23,7 +23,7 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
     </Window.Resources>
-    
+
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
