@@ -37,9 +37,10 @@ public partial class ChartTabViewModel : ViewModel
             try
             {
                 var meta = await converter.ParseMeta(ChartPath, diag);
+                var model = meta.ToModel();
                 Dispatcher.CurrentDispatcher.Invoke(() =>
                 {
-                    Model = WorkflowModel.Create(meta);
+                    Model = model;
                     Model.RootPath = Path.GetDirectoryName(ChartPath) ?? string.Empty;
                 });
             }
@@ -57,7 +58,7 @@ public partial class ChartTabViewModel : ViewModel
 
     private async Task Convert()
     {
-        var left = Model?.Id is null ? Path.GetFileNameWithoutExtension((string?)ChartPath) : $"{(int)Model.Id:0000}";
+        var left = Model?.Id is null ? Path.GetFileNameWithoutExtension(ChartPath) : $"{(int)Model.Id:0000}";
         var right = Model?.Difficulty is null ? string.Empty : $"_{(int)Model.Difficulty:00}";
 
         var dlg = new SaveFileDialog

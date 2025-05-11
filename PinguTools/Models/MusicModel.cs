@@ -2,6 +2,7 @@
 using PinguTools.Attributes;
 using PinguTools.Audio;
 using PinguTools.Localization;
+using Riok.Mapperly.Abstractions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
@@ -12,14 +13,13 @@ namespace PinguTools.Models;
 [LocalizableCategoryOrder(nameof(ModelStrings.Category_BGM), 1, typeof(ModelStrings))]
 [LocalizableCategoryOrder(nameof(ModelStrings.Category_Sync), 2, typeof(ModelStrings))]
 [LocalizableCategoryOrder(nameof(ModelStrings.Category_Misc), 3, typeof(ModelStrings))]
-public partial class MusicModel : PropertyGridModel
+public partial class MusicModel : IdModel
 {
     public MusicModel()
     {
-        BgmInitialTimeSignature.PropertyChanged += (s, e) => OnPropertyChanged(nameof(RealOffset));
         PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName != nameof(RealOffset)) return;
+            if (e.PropertyName != nameof(BgmOffset) && e.PropertyName != nameof(BgmEnableBarOffset) && e.PropertyName != nameof(BgmInitialBpm) && e.PropertyName != nameof(BgmInitialTimeSignature)) return;
             var barOffset = BgmEnableBarOffset ? AudioHelper.CalculateOffset(BgmInitialBpm, BgmInitialTimeSignature.Numerator, BgmInitialTimeSignature.Denominator) : 0;
             RealOffset = BgmOffset + barOffset;
         };
@@ -48,6 +48,7 @@ public partial class MusicModel : PropertyGridModel
     [ObservableProperty]
     [ReadOnly(true)]
     [PropertyOrder(-2)]
+    [MapperIgnore]
     public partial decimal RealOffset { get; set; }
 
     [LocalizableCategory(nameof(ModelStrings.Category_Sync), typeof(ModelStrings))]
@@ -85,10 +86,16 @@ public partial class MusicModel : PropertyGridModel
     [NotifyPropertyChangedFor(nameof(RealOffset))]
     [ObservableProperty]
     [PropertyOrder(2)]
-    public virtual partial Beat BgmInitialTimeSignature { get; set; } = new();
+    public virtual partial TimeSignature BgmInitialTimeSignature { get; set; } = new();
 
-    public partial class Beat : ObservableValidator
+    public partial class TimeSignature : ObservableValidator
     {
+        [LocalizableDisplayName(nameof(ModelStrings.Display_Tick), typeof(ModelStrings))]
+        [Browsable(false)]
+        [ObservableProperty]
+        [Range(0, short.MaxValue)]
+        public partial int Tick { get; set; }
+
         [LocalizableDisplayName(nameof(ModelStrings.Display_Numerator), typeof(ModelStrings))]
         [ObservableProperty]
         [Range(1, short.MaxValue)]
@@ -98,6 +105,11 @@ public partial class MusicModel : PropertyGridModel
         [ObservableProperty]
         [Range(1, short.MaxValue)]
         public partial int Denominator { get; set; } = 4;
+
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [MapperIgnore]
+        public new bool HasErrors { get; set; }
 
         public override string ToString()
         {

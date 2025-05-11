@@ -15,6 +15,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4"/>
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135"/>
+        <PackageReference Include="Riok.Mapperly" Version="4.2.1"/>
     </ItemGroup>
 
     <ItemGroup>

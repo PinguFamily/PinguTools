@@ -267,4 +267,13 @@
     <data name="Description_DisplayBPM" xml:space="preserve">
         <value>选曲界面中显示的BPM</value>
     </data>
+    <data name="Display_Tick" xml:space="preserve">
+        <value>时间</value>
+    </data>
+    <data name="Display_MainTil" xml:space="preserve">
+        <value>主时间轴</value>
+    </data>
+    <data name="Description_MainTil" xml:space="preserve">
+        <value>请在 Margrete 中设置此项目 (Base Timeline)。决定哪个 TIL 将会影响小节线下落速度及AIR动画速度。默认值为0。</value>
+    </data>
 </root>

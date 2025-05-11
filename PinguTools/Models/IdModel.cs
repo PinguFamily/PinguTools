@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using PinguTools.Attributes;
 using PinguTools.Localization;
+using Riok.Mapperly.Abstractions;
 using System.ComponentModel;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace PinguTools.Models;
 
-public abstract partial class PropertyGridModel : ObservableValidator
+public abstract partial class IdModel : ObservableValidator
 {
     [PropertyOrder(-1)]
     [LocalizableCategory(nameof(ModelStrings.Category_Song), typeof(ModelStrings))]
@@ -18,6 +19,7 @@ public abstract partial class PropertyGridModel : ObservableValidator
     // workaround for hiding ObservableValidator's property
     [Browsable(false)]
     [ReadOnly(true)]
+    [MapperIgnore]
     public new bool HasErrors { get; set; }
 
     partial void OnIdChanged(int? oldValue, int? newValue)

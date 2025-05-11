@@ -15,7 +15,7 @@ public partial class MetaPropertyGrid : PropertyGrid
 {
     private readonly HashSet<PropertyDefinition> cache = [];
 
-    private Type? target;
+    public Type? Target { get; set; }
 
     public MetaPropertyGrid()
     {
@@ -29,9 +29,9 @@ public partial class MetaPropertyGrid : PropertyGrid
     private void SelectedObject_Changed(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
         var type = SelectedObject?.GetType();
-        if (type != target)
+        if (type != Target)
         {
-            target = type;
+            Target = type;
             GeneratePropertyDefinitions();
         }
 
@@ -46,12 +46,12 @@ public partial class MetaPropertyGrid : PropertyGrid
 
     private void GeneratePropertyDefinitions()
     {
-        if (target == null) return;
+        if (Target == null) return;
         PropertyDefinitions.Clear();
 
         var definitions = PropertyDefinitions.Where(def => def.TargetProperties != null);
         var existingProperties = definitions.SelectMany(def => def.TargetProperties.OfType<string>()).ToHashSet(StringComparer.Ordinal);
-        var metaProps = target.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var metaProps = Target.GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var hashSet = Whitelist.ToHashSet(StringComparer.Ordinal);
 
         for (var i = 0; i < metaProps.Length; i++)
@@ -62,7 +62,8 @@ public partial class MetaPropertyGrid : PropertyGrid
             var order = prop.GetCustomAttribute<PropertyOrderAttribute>();
             var newDef = new PropertyDefinition
             {
-                DisplayOrder = order?.Order ?? i, TargetProperties = new[] { prop.Name },
+                DisplayOrder = order?.Order ?? i,
+                TargetProperties = new[] { prop.Name },
                 Description = prop.GetCustomAttribute<DescriptionAttribute>()?.Description,
                 Category = prop.GetCustomAttribute<CategoryAttribute>()?.Category,
                 DisplayName = prop.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? prop.Name,

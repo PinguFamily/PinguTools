@@ -159,11 +159,20 @@ namespace PinguTools.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure this through Margrete. If enabled, a silent measure with click cues is inserted at the beginning, ensuring that the first musical measure follows the blank..
+        ///   Looks up a localized string similar to Configure this through Margrete (Insert a blank bar before the first measure). If enabled, a silent measure with click cues is inserted at the beginning, ensuring that the first musical measure follows the blank..
         /// </summary>
         public static string Description_InsertBlankMeasure {
             get {
                 return ResourceManager.GetString("Description_InsertBlankMeasure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure this through Margrete (Base Timeline). Determines which Timeline affects the bar line positions and AIR animation speed. Default is 0..
+        /// </summary>
+        public static string Description_MainTil {
+            get {
+                return ResourceManager.GetString("Description_MainTil", resourceCulture);
             }
         }
         
@@ -357,6 +366,15 @@ namespace PinguTools.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Main Timeline.
+        /// </summary>
+        public static string Display_MainTil {
+            get {
+                return ResourceManager.GetString("Display_MainTil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manual Offset (s).
         /// </summary>
         public static string Display_ManualOffset {
@@ -425,6 +443,15 @@ namespace PinguTools.Localization {
         public static string Display_StageId {
             get {
                 return ResourceManager.GetString("Display_StageId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tick.
+        /// </summary>
+        public static string Display_Tick {
+            get {
+                return ResourceManager.GetString("Display_Tick", resourceCulture);
             }
         }
         

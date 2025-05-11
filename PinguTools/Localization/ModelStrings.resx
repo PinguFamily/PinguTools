@@ -80,8 +80,8 @@
   <value>Insert Blank Measure</value>
 </data>
     <data name="Description_InsertBlankMeasure" xml:space="preserve">
-  <value>Configure this through Margrete. If enabled, a silent measure with click cues is inserted at the beginning, ensuring that the first musical measure follows the blank.</value>
-</data>
+        <value>Configure this through Margrete (Insert a blank bar before the first measure). If enabled, a silent measure with click cues is inserted at the beginning, ensuring that the first musical measure follows the blank.</value>
+    </data>
     <data name="Display_BgmInitialBpm" xml:space="preserve">
   <value>Initial BPM</value>
 </data>
@@ -95,6 +95,9 @@
   <value>Specifies the time signature (beats per bar and note value) at the start of the chart. It is used to calculate real offset.</value>
 </data>
     <!-- Beat -->
+    <data name="Display_Tick" xml:space="preserve">
+  <value>Tick</value>
+</data>
     <data name="Display_Numerator" xml:space="preserve">
   <value>Numerator</value>
 </data>
@@ -120,6 +123,12 @@
     <data name="Display_DisplayBPM" xml:space="preserve">
   <value>Display BPM</value>
 </data>
+    <data name="Display_MainTil" xml:space="preserve">
+  <value>Main Timeline</value>
+</data>
+    <data name="Description_MainTil" xml:space="preserve">
+        <value>Configure this through Margrete (Base Timeline). Determines which Timeline affects the bar line positions and AIR animation speed. Default is 0.</value>
+    </data>
     <!-- World's End -->
     <data name="Category_WorldsEnd" xml:space="preserve">
   <value>World's End</value>

@@ -6,6 +6,7 @@ using PinguTools.Common;
 using PinguTools.Common.Localization;
 using PinguTools.Image;
 using PinguTools.Localization;
+using PinguTools.Models;
 using PinguTools.Services;
 using System.IO;
 using System.Media;
