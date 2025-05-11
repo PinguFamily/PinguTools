@@ -150,7 +150,7 @@
     <value>未找到主 TIL {0}。已创建一个速度为 1.0 的新 TIL。</value>
 </data>
     <data name="Diag_note_overlapped_in_different_TIL" xml:space="preserve">
-    <value>当前的物件与其他 TIL 中的物件存在重叠。这可能导致该物件的流速出现问题。</value>
+    <value>当前物件与其他 TIL 中的物件存在重叠。这可能导致该物件的流速出现问题。</value>
   </data>
     <data name="Error_no_negative_timeline_event" xml:space="preserve">
     <value>变速事件必须具有非负的 TIL 值。</value>
