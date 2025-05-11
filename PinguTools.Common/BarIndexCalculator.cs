@@ -7,17 +7,17 @@ namespace PinguTools.Common;
 
 public class BarIndexCalculator
 {
-    private int BarTick { get; }
-
-    private IEnumerable<TimeSignature> TimeSignatures { get; }
-    private IReadOnlyCollection<TimeSignature> ReversedTimeSignatures { get; }
-
     public BarIndexCalculator(int resolution, IEnumerable<TimeSignature> sigs)
     {
         BarTick = resolution;
         TimeSignatures = sigs.OrderBy(x => x.Tick).ToList();
         ReversedTimeSignatures = TimeSignatures.Reverse().ToList();
     }
+
+    private int BarTick { get; }
+
+    private IEnumerable<TimeSignature> TimeSignatures { get; }
+    private IReadOnlyCollection<TimeSignature> ReversedTimeSignatures { get; }
 
     public TimePosition GetPositionFromTick(int tick)
     {

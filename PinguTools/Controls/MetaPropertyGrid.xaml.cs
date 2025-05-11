@@ -15,12 +15,12 @@ public partial class MetaPropertyGrid : PropertyGrid
 {
     private readonly HashSet<PropertyDefinition> cache = [];
 
-    public Type? Target { get; set; }
-
     public MetaPropertyGrid()
     {
         InitializeComponent();
     }
+
+    public Type? Target { get; set; }
 
     public List<string> Whitelist { get; set; } = [];
 
