@@ -7,13 +7,13 @@ public enum DiagnosticSeverity
     Error = 3
 }
 
-public record Diagnostic(DiagnosticSeverity Severity, string Message, BarIndexCalculator.Position? Position = null, object? Target = null) : IComparable<Diagnostic>
+public record Diagnostic(DiagnosticSeverity Severity, string Message, TimePosition? Position = null, object? Target = null) : IComparable<Diagnostic>
 {
     public int CompareTo(Diagnostic? other)
     {
         if (ReferenceEquals(this, other)) return 0;
         if (other is null) return 1;
-        var positionComparison = Comparer<BarIndexCalculator.Position?>.Default.Compare(Position, other.Position);
+        var positionComparison = Comparer<TimePosition?>.Default.Compare(Position, other.Position);
         if (positionComparison != 0) return positionComparison;
         var severityComparison = Severity.CompareTo(other.Severity);
         if (severityComparison != 0) return severityComparison;

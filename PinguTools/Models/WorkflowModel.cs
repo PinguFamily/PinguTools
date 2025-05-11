@@ -2,6 +2,7 @@
 using PinguTools.Attributes;
 using PinguTools.Common;
 using PinguTools.Localization;
+using Riok.Mapperly.Abstractions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -78,6 +79,14 @@ public partial class WorkflowModel : MusicModel
     [PropertyOrder(6)]
     public partial decimal MainBpm { get; set; }
 
+    [LocalizableCategory(nameof(ModelStrings.Category_Chart), typeof(ModelStrings))]
+    [LocalizableDisplayName(nameof(ModelStrings.Display_MainTil), typeof(ModelStrings))]
+    [LocalizableDescription(nameof(ModelStrings.Description_MainTil), typeof(ModelStrings))]
+    [ReadOnly(true)]
+    [ObservableProperty]
+    [PropertyOrder(7)]
+    public partial int MainTil { get; set; }
+
     // World's End
     [PropertyOrder(-1)]
     [LocalizableCategory(nameof(ModelStrings.Category_WorldsEnd), typeof(ModelStrings))]
@@ -146,6 +155,7 @@ public partial class WorkflowModel : MusicModel
     [ObservableProperty]
     [Browsable(false)]
     [ReadOnly(true)]
+    [MapperIgnore]
     public partial string RootPath { get; set; } = string.Empty;
 
     [ObservableProperty]
@@ -169,27 +179,10 @@ public partial class WorkflowModel : MusicModel
     }
 
     [ReadOnly(true)]
-    public override Beat BgmInitialTimeSignature
+    public override TimeSignature BgmInitialTimeSignature
     {
         get => base.BgmInitialTimeSignature;
         set => base.BgmInitialTimeSignature = value;
-    }
-
-    public static WorkflowModel Create(ChartMeta meta)
-    {
-        ArgumentNullException.ThrowIfNull(meta);
-        var json = JsonSerializer.Serialize(meta);
-        var model = JsonSerializer.Deserialize<WorkflowModel>(json, JsonOptions);
-        if (model is null) throw new JsonException("Failed to deserialize WorkflowModel.");
-        return model;
-    }
-
-    public ChartMeta ToMeta()
-    {
-        var json = JsonSerializer.Serialize(this, JsonOptions);
-        var meta = JsonSerializer.Deserialize<ChartMeta>(json, JsonOptions);
-        if (meta is null) throw new JsonException("Failed to deserialize ChartMeta.");
-        return meta;
     }
 
     protected override void IdChangedHandler(int? oldValue, int? newValue)

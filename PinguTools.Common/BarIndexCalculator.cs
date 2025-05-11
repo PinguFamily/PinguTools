@@ -19,7 +19,7 @@ public class BarIndexCalculator
         ReversedTimeSignatures = TimeSignatures.Reverse().ToList();
     }
 
-    public Position GetPositionFromTick(int tick)
+    public TimePosition GetPositionFromTick(int tick)
     {
         foreach (var ts in ReversedTimeSignatures)
         {
@@ -32,7 +32,7 @@ public class BarIndexCalculator
             var beatTick = (double)BarTick / ts.Denominator;
             var beatIndex = (int)(remainder / beatTick);
             var tickOffset = (int)(remainder % beatTick);
-            return new Position(totalBarsBefore + barsSinceThisSignature + 1, beatIndex, tickOffset);
+            return new TimePosition(totalBarsBefore + barsSinceThisSignature + 1, beatIndex + 1, tickOffset);
         }
         throw new InvalidOperationException();
     }
@@ -57,23 +57,23 @@ public class BarIndexCalculator
     {
         return (int)(BarTick / (double)ts.Denominator * ts.Numerator);
     }
+}
 
-    public record Position(int BarIndex, int BeatIndex, int TickOffset) : IComparable<Position>
+public record TimePosition(int BarIndex, int BeatIndex, int TickOffset) : IComparable<TimePosition>
+{
+    public int CompareTo(TimePosition? other)
     {
-        public int CompareTo(Position? other)
-        {
-            if (ReferenceEquals(this, other)) return 0;
-            if (other is null) return 1;
-            var barIndexComparison = BarIndex.CompareTo(other.BarIndex);
-            if (barIndexComparison != 0) return barIndexComparison;
-            var beatIndexComparison = BeatIndex.CompareTo(other.BeatIndex);
-            if (beatIndexComparison != 0) return beatIndexComparison;
-            return TickOffset.CompareTo(other.TickOffset);
-        }
+        if (ReferenceEquals(this, other)) return 0;
+        if (other is null) return 1;
+        var barIndexComparison = BarIndex.CompareTo(other.BarIndex);
+        if (barIndexComparison != 0) return barIndexComparison;
+        var beatIndexComparison = BeatIndex.CompareTo(other.BeatIndex);
+        if (beatIndexComparison != 0) return beatIndexComparison;
+        return TickOffset.CompareTo(other.TickOffset);
+    }
 
-        public override string ToString()
-        {
-            return $"{BarIndex}:{BeatIndex}:{TickOffset}";
-        }
+    public override string ToString()
+    {
+        return $"{BarIndex}:{BeatIndex}.{TickOffset}";
     }
 }
