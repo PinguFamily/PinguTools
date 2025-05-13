@@ -162,7 +162,7 @@
     <data name="Category_Misc" xml:space="preserve">
   <value>Misc</value>
 </data>
-    <data name="Display_IsCustomBackground" xml:space="preserve">
+    <data name="Display_UseCustomBackground" xml:space="preserve">
         <value>Generate Custom Background</value>
     </data>
     <data name="Display_StageId" xml:space="preserve">

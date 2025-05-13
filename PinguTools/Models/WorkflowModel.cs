@@ -115,10 +115,10 @@ public partial class WorkflowModel : MusicModel
     public partial string JacketFileName { get; set; } = string.Empty;
 
     [LocalizableCategory(nameof(ModelStrings.Category_Display), typeof(ModelStrings))]
-    [LocalizableDisplayName(nameof(ModelStrings.Display_IsCustomBackground), typeof(ModelStrings))]
+    [LocalizableDisplayName(nameof(ModelStrings.Display_UseCustomBackground), typeof(ModelStrings))]
     [ObservableProperty]
     [PropertyOrder(1)]
-    public partial bool IsCustomBg { get; set; } = false;
+    public partial bool UseCustomBg { get; set; } = false;
 
     [LocalizableCategory(nameof(ModelStrings.Category_Display), typeof(ModelStrings))]
     [LocalizableDisplayName(nameof(ModelStrings.Display_StageId), typeof(ModelStrings))]

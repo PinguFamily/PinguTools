@@ -39,7 +39,7 @@ public class WorkflowTabViewModel : ChartTabViewModel
         var songId = meta.Id ?? throw new OperationCanceledException(CommonStrings.Error_song_id_is_not_set);
         if (string.IsNullOrEmpty(meta.BgmFileName)) throw new OperationCanceledException(CommonStrings.Error_audio_file_is_not_set);
         if (string.IsNullOrEmpty(meta.JacketFileName)) throw new OperationCanceledException(CommonStrings.Error_jacket_file_is_not_set);
-        if (meta.IsCustomBg)
+        if (meta.UseCustomBg)
         {
             if (string.IsNullOrEmpty(meta.BgFileName)) throw new OperationCanceledException(CommonStrings.Error_background_file_is_not_set);
             if (meta.StageId is null) throw new OperationCanceledException(CommonStrings.Error_stage_id_is_not_set);
@@ -56,7 +56,7 @@ public class WorkflowTabViewModel : ChartTabViewModel
 
         await ActionService.RunAsync(async (diag, p, ct) =>
         {
-            if (meta.IsCustomBg)
+            if (meta.UseCustomBg)
             {
                 var stageOpts = new StageConverter.Context(meta.BgFileName, [], meta.StageId, path, meta.NotesFieldLine, assetService.StageNames);
                 await stageConverter.ConvertAsync(stageOpts, diag, p, ct);

@@ -339,15 +339,6 @@ namespace PinguTools.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate Custom Background.
-        /// </summary>
-        public static string Display_IsCustomBackground {
-            get {
-                return ResourceManager.GetString("Display_IsCustomBackground", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Jacket File.
         /// </summary>
         public static string Display_JacketFile {
@@ -461,6 +452,15 @@ namespace PinguTools.Localization {
         public static string Display_Title {
             get {
                 return ResourceManager.GetString("Display_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Custom Background.
+        /// </summary>
+        public static string Display_UseCustomBackground {
+            get {
+                return ResourceManager.GetString("Display_UseCustomBackground", resourceCulture);
             }
         }
         

@@ -131,6 +131,7 @@ public partial class MgxcParser
         {
             if (args.Length < 2) return false;
             mgxcChart.Meta.BgFileName = args[1];
+            if (!string.IsNullOrEmpty(mgxcChart.Meta.BgFileName)) mgxcChart.Meta.UseCustomBg = true;
             return true;
         }
 

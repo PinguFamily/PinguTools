@@ -77,7 +77,7 @@ public partial class MetaPropertyGrid : PropertyGrid
     private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (sender is not WorkflowModel model) return;
-        if (e.PropertyName is nameof(WorkflowModel.Difficulty) or nameof(WorkflowModel.IsCustomBg)) ControlPropertyVisibility(model);
+        if (e.PropertyName is nameof(WorkflowModel.Difficulty) or nameof(WorkflowModel.UseCustomBg)) ControlPropertyVisibility(model);
     }
 
     private void RestorePropertyGrid()
@@ -93,7 +93,7 @@ public partial class MetaPropertyGrid : PropertyGrid
         if (model == null) return;
         RestorePropertyGrid();
 
-        var isCustomBg = model.IsCustomBg;
+        var isCustomBg = model.UseCustomBg;
         if (isCustomBg) HidePropertyDefinitions(nameof(WorkflowModel.Stage));
         else HidePropertyDefinitions(nameof(WorkflowModel.StageId), nameof(WorkflowModel.NotesFieldLine), nameof(WorkflowModel.BgFileName));
 

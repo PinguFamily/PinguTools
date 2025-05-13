@@ -33,17 +33,9 @@ public class ChartMeta
 
     public string JacketFileName { get; set; } = string.Empty;
 
-    public bool IsCustomBg { get; set; }
+    public bool UseCustomBg { get; set; }
     public int? StageId { get; set; }
-    public string BgFileName
-    {
-        get;
-        set
-        {
-            IsCustomBg = !string.IsNullOrEmpty(value);
-            field = value;
-        }
-    } = string.Empty;
+    public string BgFileName { get; set; } = string.Empty;
 
     public Entry NotesFieldLine { get; set; } = new(8, "White", "ホワイト");
 
