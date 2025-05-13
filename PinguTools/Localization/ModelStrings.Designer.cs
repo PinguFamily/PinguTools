@@ -213,7 +213,7 @@ namespace PinguTools.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For the &quot;World&apos;s End&quot; event that unlocks the chart in the game..
+        ///   Looks up a localized string similar to For the &quot;World&apos;s End&quot; event that unlocks the chart in the game. If left blank, the generation of the associated Event.xml file will be skipped..
         /// </summary>
         public static string Description_WorldsEndEventID {
             get {

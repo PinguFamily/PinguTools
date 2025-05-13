@@ -137,8 +137,8 @@
   <value>World's End Event ID</value>
 </data>
     <data name="Description_WorldsEndEventID" xml:space="preserve">
-  <value>For the "World's End" event that unlocks the chart in the game.</value>
-</data>
+        <value>For the "World's End" event that unlocks the chart in the game. If left blank, the generation of the associated Event.xml file will be skipped.</value>
+    </data>
     <data name="Display_WorldsEndTag" xml:space="preserve">
   <value>World's End Tag</value>
 </data>

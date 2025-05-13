@@ -4,17 +4,7 @@ namespace PinguTools.Common;
 
 public class ChartMeta
 {
-    public int? Id
-    {
-        get;
-        set
-        {
-            if (field == StageId) StageId = value;
-            if (field == WeEventId) WeEventId = value;
-            field = value;
-        }
-    }
-
+    public int? Id { get; set; }
     public string MgxcId { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string SortName { get; set; } = string.Empty;
@@ -25,7 +15,7 @@ public class ChartMeta
     public decimal Level { get; set; }
     public DateTime ReleaseDate { get; set; } = DateTime.Now;
     public decimal MainBpm { get; set; }
-    public int MainTil { get; set; } = 0;
+    public int MainTil { get; set; }
 
     public int? WeEventId { get; set; }
     public Entry WeTag { get; set; } = Entry.Default;
@@ -38,7 +28,6 @@ public class ChartMeta
     public string BgFileName { get; set; } = string.Empty;
 
     public Entry NotesFieldLine { get; set; } = new(8, "White", "ホワイト");
-
     public Entry Stage { get; set; } = new(8, "レーベル 共通0008_新イエローリング", null);
 
     public string BgmFileName { get; set; } = string.Empty;

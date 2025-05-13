@@ -187,7 +187,6 @@ public partial class WorkflowModel : MusicModel
 
     protected override void IdChangedHandler(int? oldValue, int? newValue)
     {
-        if (WeEventId == oldValue) WeEventId = newValue;
         if (StageId == oldValue) StageId = newValue;
     }
 

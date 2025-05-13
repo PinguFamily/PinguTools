@@ -79,7 +79,7 @@ public class WorkflowTabViewModel : ChartTabViewModel
             });
             var chartName = fumen?.Element("file")?.Value ?? throw new OperationCanceledException(CommonStrings.Error_chart_file_is_not_set);
 
-            if (meta.Difficulty == Difficulty.WorldsEnd)
+            if (meta is { Difficulty: Difficulty.WorldsEnd, WeEventId: not null })
             {
                 var eventXml = ChartXmlBuilder.BuildWeEventXml(meta);
                 var eventName = eventXml.Descendants("dataName").First().Value;

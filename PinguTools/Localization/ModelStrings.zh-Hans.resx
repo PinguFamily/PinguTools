@@ -227,8 +227,8 @@
     <value>World's End 事件 ID</value>
 </data>
     <data name="Description_WorldsEndEventID" xml:space="preserve">
-    <value>用于解锁该谱面的事件 ID。</value>
-</data>
+        <value>用于解锁该谱面的事件 ID。如果不填写此项，将不会生成对应的 Event.xml 文件。</value>
+    </data>
     <data name="Display_WorldsEndTag" xml:space="preserve">
     <value>World's End 类型</value>
 </data>
