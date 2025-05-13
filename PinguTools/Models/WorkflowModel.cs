@@ -161,7 +161,7 @@ public partial class WorkflowModel : MusicModel
     [ObservableProperty]
     [Browsable(false)]
     [ReadOnly(true)]
-    public partial string? MgxcId { get; set; }
+    public partial string MgxcId { get; set; } = string.Empty;
 
     // Read-only properties
     [ReadOnly(true)]
