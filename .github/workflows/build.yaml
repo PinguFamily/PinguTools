@@ -1,0 +1,53 @@
+name: "build release"
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10"
+
+      - name: Initialize Submodules
+        run: git submodule update --init --recursive
+
+      - name: Install cargo-c
+        run: cargo install cargo-c
+
+      - name: Restore .NET Dependencies
+        run: dotnet restore
+
+      - name: Publish .NET Application (Self-Contained)
+        run: dotnet publish -c Release -r win-x64 --self-contained true --output Build/SelfContained
+
+      - name: Publish .NET Application (Framework-Dependent)
+        run: dotnet publish -c Release -r win-x64 --self-contained false --output Build/FrameworkDependent
+
+      - name: Prepare Self-Contained Artifact
+        run: |
+          $tagName = $env:GITHUB_REF -replace 'refs/(heads|tags|remotes)/', ''
+          New-Item -ItemType Directory -Path Build/artifacts
+          Copy-Item "Build/SelfContained/PinguTools.exe" "Build/artifacts/PinguTools_${tagName}_SelfContained.exe"
+
+      - name: Prepare Framework-Dependent Artifact
+        run: |
+          $tagName = $env:GITHUB_REF -replace 'refs/(heads|tags|remotes)/', ''
+          Copy-Item "Build/FrameworkDependent/PinguTools.exe" "Build/artifacts/PinguTools_${tagName}.exe"
+
+      - name: Action Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Build/artifacts/*
+            LICENSE
