@@ -10,6 +10,5 @@
         <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>preview</LangVersion>
-        <PublishSingleFile>true</PublishSingleFile>
     </PropertyGroup>
 </Project>

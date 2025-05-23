@@ -15,18 +15,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
+      - name: Initial Cargo
+        uses: actions/cache@v4
         with:
-          dotnet-version: "10"
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - run: cargo install cargo-c
 
       - name: Initialize Submodules
         run: git submodule update --init --recursive
 
-      - name: Install cargo-c
-        run: cargo install cargo-c
-
-      - name: Restore .NET Dependencies
-        run: dotnet restore
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10"
+          cache: true
+      - run: dotnet restore --locked-mode
 
       - name: Publish .NET Application (Self-Contained)
         run: dotnet publish -c Release -r win-x64 --self-contained true --output Build/SelfContained
