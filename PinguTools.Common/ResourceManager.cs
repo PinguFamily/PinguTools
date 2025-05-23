@@ -41,6 +41,7 @@ public static class ResourceManager
                 }
             }
             Resources.Clear();
+            Directory.Delete(TempPath, true);
         }
     }
 
