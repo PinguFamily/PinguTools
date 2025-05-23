@@ -6,4 +6,4 @@
 	url = https://github.com/Foahh/SonicAudioTools
 [submodule "External/ebur128_rs"]
 	path = External/ebur128_rs
-	url = https://github.com/sdroege/ebur128/
+	url = https://github.com/Foahh/ebur128

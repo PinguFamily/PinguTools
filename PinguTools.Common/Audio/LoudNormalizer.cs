@@ -1,5 +1,4 @@
-﻿using libebur128_net;
-using libebur128_net.libebur128;
+﻿using libebur128;
 using NAudio.Wave;
 
 namespace PinguTools.Common.Audio;
@@ -35,8 +34,7 @@ public sealed class LoudNormalizer
         var ch = (uint)waveStream.WaveFormat.Channels;
         var rate = (uint)waveStream.WaveFormat.SampleRate;
 
-        using var ebu = Ebur128.Init(ch, rate, libebur128Native.mode.EBUR128_MODE_I | libebur128Native.mode.EBUR128_MODE_TRUE_PEAK);
-
+        using var ebu = new EbuR128Handler(ch, rate, EbuR128Modes.EBUR128_MODE_I | EbuR128Modes.EBUR128_MODE_TRUE_PEAK);
         var reader = waveStream.ToSampleProvider();
         var buf = new float[rate * ch];
         int read;

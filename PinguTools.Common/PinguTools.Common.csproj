@@ -9,12 +9,18 @@
         <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    </PropertyGroup>
+
     <Import Project="..\Version.props"/>
 
-    <Target Name="CompileEbur128" BeforeTargets="BeforeBuild">
+    <Target Name="Build Ebur128" BeforeTargets="BeforeBuild">
         <Exec Command="cargo cbuild --release --manifest-path &quot;$(SolutionDir)External\ebur128_rs\Cargo.toml&quot;"/>
-        <Copy SourceFiles="$(SolutionDir)External\ebur128_rs\target\x86_64-pc-windows-msvc\release\ebur128.dll"
-              DestinationFolder="$(SolutionDir)External"/>
     </Target>
 
     <ItemGroup>
@@ -34,7 +40,6 @@
 
     <ItemGroup>
         <PackageReference Include="BCnEncoder.Net.ImageSharp" Version="1.1.2"/>
-        <PackageReference Include="libebur128-net" Version="1.2.6"/>
         <PackageReference Include="NAudio" Version="2.2.1"/>
         <PackageReference Include="NAudio.Vorbis.Latest" Version="1.5.1"/>
     </ItemGroup>
@@ -42,5 +47,6 @@
     <ItemGroup>
         <ProjectReference Include="..\External\SonicAudioTools\Source\SonicAudioLib\SonicAudioLib.csproj"/>
         <ProjectReference Include="..\External\VGAudio\src\VGAudio\VGAudio.csproj"/>
+        <ProjectReference Include="..\External\libebur128\libebur128.csproj"/>
     </ItemGroup>
 </Project>

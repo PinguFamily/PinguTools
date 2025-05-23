@@ -17,11 +17,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Version.props = Version.props
 		LICENSE = LICENSE
 		THIRD-PARTY-NOTICES.md = THIRD-PARTY-NOTICES.md
+		.gitmodules = .gitmodules
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonicAudioLib", "External\SonicAudioTools\Source\SonicAudioLib\SonicAudioLib.csproj", "{8963B4D5-36D4-4D54-A30B-FD158479D1E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VGAudio", "External\VGAudio\src\VGAudio\VGAudio.csproj", "{A47B9EFE-2D60-4A67-B8A3-D228D0EE8ADE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libebur128", "External\libebur128\libebur128.csproj", "{5E975E67-90A2-4CC8-ACF5-DEDCD305CBC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +48,10 @@ Global
 		{A47B9EFE-2D60-4A67-B8A3-D228D0EE8ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A47B9EFE-2D60-4A67-B8A3-D228D0EE8ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A47B9EFE-2D60-4A67-B8A3-D228D0EE8ADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E975E67-90A2-4CC8-ACF5-DEDCD305CBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E975E67-90A2-4CC8-ACF5-DEDCD305CBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E975E67-90A2-4CC8-ACF5-DEDCD305CBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E975E67-90A2-4CC8-ACF5-DEDCD305CBC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
