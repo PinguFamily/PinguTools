@@ -14,18 +14,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Cargo Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
+        
       - uses: taiki-e/cache-cargo-install-action@v2
         with:
           tool: cargo-c
@@ -36,11 +25,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10"
-          cache: true
-          cache-dependency-path: '**/packages.lock.json'
 
       - name: Restore Nuget Packages
-        run: dotnet restore --locked-mode
+        run: dotnet restore
 
       - name: Publish .NET Application (Self-Contained)
         run: dotnet publish -c Release -r win-x64 --self-contained true --output Build/SelfContained
