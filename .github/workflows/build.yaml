@@ -26,8 +26,9 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Cargo Install
-        run: cargo install cargo-c
+      - uses: taiki-e/cache-cargo-install-action@v2
+        with:
+          tool: cargo-c
 
       - name: Initialize Submodules
         run: git submodule update --init --recursive

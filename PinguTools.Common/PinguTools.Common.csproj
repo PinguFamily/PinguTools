@@ -20,7 +20,7 @@
     <Import Project="..\Version.props"/>
 
     <Target Name="Build Ebur128" BeforeTargets="BeforeBuild">
-        <Exec Command="cargo cbuild --release --manifest-path &quot;$(SolutionDir)External\ebur128_rs\Cargo.toml&quot;"/>
+        <Exec Command="cargo cbuild --release --manifest-path &quot;$(SolutionDir)External\ebur128_rs\Cargo.toml&quot; --features bindgen"/>
     </Target>
 
     <ItemGroup>
