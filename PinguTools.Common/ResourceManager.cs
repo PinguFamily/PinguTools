@@ -41,7 +41,14 @@ public static class ResourceManager
                 }
             }
             Resources.Clear();
-            Directory.Delete(TempPath, true);
+            try
+            {
+                Directory.Delete(TempPath, true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 
