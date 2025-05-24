@@ -17,30 +17,20 @@ public class ModelJsonTypeInfoResolver : IJsonTypeInfoResolver
 
     public JsonTypeInfo? GetTypeInfo(Type type, JsonSerializerOptions options)
     {
-        var jsonTypeInfo = DefaultResolver.GetTypeInfo(type, options);
+        var info = DefaultResolver.GetTypeInfo(type, options);
 
-        if (type.IsSubclassOf(typeof(ObservableValidator)))
+        if (typeof(ObservableValidator).IsAssignableFrom(type))
         {
-            var hasError = jsonTypeInfo.Properties.FirstOrDefault(p => p.Name == nameof(ObservableValidator.HasErrors));
-            if (hasError != null) jsonTypeInfo.Properties.Remove(hasError);
+            var hasError = info.Properties.FirstOrDefault(p => string.Equals(p.Name, nameof(ObservableValidator.HasErrors), StringComparison.OrdinalIgnoreCase));
+            if (hasError != null) info.Properties.Remove(hasError);
         }
 
-        return jsonTypeInfo;
+        return info;
     }
 }
 
 public abstract class Model : ObservableValidator
 {
-    protected virtual string JsonName => throw new InvalidOperationException();
-
-    private static JsonSerializerOptions JsonSerializerOptions => new()
-    {
-        WriteIndented = true,
-        PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        TypeInfoResolver = new ModelJsonTypeInfoResolver()
-    };
-
     public async Task LoadAsync(string directory, CancellationToken token)
     {
         var path = Path.Combine(directory, JsonName);
@@ -78,8 +68,18 @@ public abstract class Model : ObservableValidator
         if (string.IsNullOrWhiteSpace(directory)) throw new ArgumentNullException(nameof(directory));
         var path = Path.Combine(directory, JsonName);
         await using var stream = File.Create(path);
-        await JsonSerializer.SerializeAsync(stream, this, JsonSerializerOptions, token);
+        await JsonSerializer.SerializeAsync(stream, this, this.GetType(), JsonSerializerOptions, token);
     }
+    
+    protected virtual string JsonName => throw new InvalidOperationException();
+
+    private static JsonSerializerOptions JsonSerializerOptions => new()
+    {
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        TypeInfoResolver = new ModelJsonTypeInfoResolver()
+    };
 
     // workaround for hiding ObservableValidator's property
     [Browsable(false)]
