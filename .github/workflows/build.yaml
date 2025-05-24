@@ -44,21 +44,21 @@ jobs:
         run: dotnet restore
 
       - name: Publish .NET Application (Self-Contained)
-        run: dotnet publish -c Release -r win-x64 --self-contained true --output Build/SelfContained
+        run: dotnet publish -c Release -r win-x64 --self-contained true --artifacts-path ./Build/Self-Contained
 
       - name: Publish .NET Application (Framework-Dependent)
-        run: dotnet publish -c Release -r win-x64 --self-contained false --output Build/FrameworkDependent
+        run: dotnet publish -c Release -r win-x64 --self-contained false --artifacts-path ./Build/Framework-Dependent
 
       - name: Prepare Self-Contained Artifact
         run: |
           $tagName = $env:GITHUB_REF -replace 'refs/(heads|tags|remotes)/', ''
           New-Item -ItemType Directory -Path Build/artifacts
-          Copy-Item "Build/SelfContained/PinguTools.exe" "Build/artifacts/PinguTools_${tagName}_SelfContained.exe"
+          Copy-Item "Build/Self-Contained/publish/PinguTools/release_win-x64/PinguTools.exe" "Build/artifacts/PinguTools_${tagName}_Self_Contained.exe"
 
       - name: Prepare Framework-Dependent Artifact
         run: |
           $tagName = $env:GITHUB_REF -replace 'refs/(heads|tags|remotes)/', ''
-          Copy-Item "Build/FrameworkDependent/PinguTools.exe" "Build/artifacts/PinguTools_${tagName}.exe"
+          Copy-Item "Build/Framework-Dependent/publish/PinguTools/release_win-x64/PinguTools.exe" "Build/artifacts/PinguTools_${tagName}.exe"
 
       - name: Action Release
         uses: softprops/action-gh-release@v2
