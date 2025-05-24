@@ -11,12 +11,39 @@ permissions:
 
 jobs:
   build:
+    env:
+      DOTNET_INSTALL_DIR: '.\.dotnet'
+      DOTNET_VERSION: "10"
+
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      - name: Initialize Submodules
-        run: git submodule update --init --recursive
+      - name: Cache .NET
+        id: dotnet-cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.DOTNET_INSTALL_DIR }}
+          key: ${{ runner.os }}-dotnet-${{ env.DOTNET_VERSION }}
+          restore-keys: ${{ runner.os }}-dotnet-${{ env.DOTNET_VERSION }}
+
+      - uses: actions/setup-dotnet@v4
+        if: steps.dotnet-cache-restore.outputs.cache-hit != 'true'
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: .NET Cache Save
+        id: dotnet-cargo-save
+        if: always() && steps.dotnet-cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.dotnet-cache-restore.outputs.cache-primary-key }}
+          path: ${{ env.DOTNET_INSTALL_DIR }}
+
+      - name: Restore Nuget Packages
+        run: dotnet restore
 
       - name: Cargo Cache Restore
         id: cargo-cache-restore
@@ -27,21 +54,13 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('External/ebur128_rs/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ebur128_rs/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
 
       - name: Install "cargo-c"
-        if: steps.cache-cargo.outputs.cache-hit != 'true'
+        if: steps.cargo-cache-restore.outputs.cache-hit != 'true'
         run: "cargo install cargo-c"
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "10"
-          cache-dependency-path: |
-            - "**/packages.lock.json"
-            - "External/**/packages.lock.json"
-
-      - name: Restore Nuget Packages
-        run: dotnet restore
 
       - name: Publish .NET Application (Self-Contained)
         run: dotnet publish -c Release -r win-x64 --self-contained true --artifacts-path ./Build/Self-Contained
@@ -62,7 +81,7 @@ jobs:
 
       - name: Cargo Cache Save
         id: cache-cargo-save
-        if: always() && steps.cache-cargo.outputs.cache-hit != 'true'
+        if: always() && steps.cargo-cache-restore.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           key: ${{ steps.cargo-cache-restore.outputs.cache-primary-key }}
