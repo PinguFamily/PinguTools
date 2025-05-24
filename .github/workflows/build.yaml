@@ -52,3 +52,4 @@ jobs:
           files: |
             Build/artifacts/*
             LICENSE
+            THIRD-PARTY-NOTICES.md

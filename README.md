@@ -2,6 +2,12 @@
 
 An all-in-one toolbox for converting custom assets for **CHUNITHM** (charts, music, jackets, stages, etc.).
 
+## Usage
+
+- Please refer to the [English Wiki](https://github.com/Foahh/PinguTools/wiki/English).
+
+- 本工具使用方法请见 [中文 Wiki](https://github.com/Foahh/PinguTools/wiki/%E4%B8%AD%E6%96%87)
+
 ## Disclaimer
 
 This project is created solely for study and self-evaluation purposes.
