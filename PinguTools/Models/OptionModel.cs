@@ -12,7 +12,7 @@ namespace PinguTools.Models;
 
 public partial class OptionModel : Model
 {
-    protected override string JsonName => "option.json";
+    protected override string JsonName => "options.json";
 
     [ObservableProperty]
     [MinLength(4)]
