@@ -1,18 +1,89 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using PinguTools.Common;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using mgxc = PinguTools.Common.Chart.Models.mgxc;
 
 namespace PinguTools.Models;
 
+public class ModelJsonTypeInfoResolver : IJsonTypeInfoResolver
+{
+    private static readonly DefaultJsonTypeInfoResolver DefaultResolver = new DefaultJsonTypeInfoResolver();
+
+    public JsonTypeInfo? GetTypeInfo(Type type, JsonSerializerOptions options)
+    {
+        var jsonTypeInfo = DefaultResolver.GetTypeInfo(type, options);
+
+        if (type.IsSubclassOf(typeof(ObservableValidator)))
+        {
+            var hasError = jsonTypeInfo.Properties.FirstOrDefault(p => p.Name == nameof(ObservableValidator.HasErrors));
+            if (hasError != null) jsonTypeInfo.Properties.Remove(hasError);
+        }
+
+        return jsonTypeInfo;
+    }
+}
+
 public abstract class Model : ObservableValidator
 {
+    protected virtual string JsonName => throw new InvalidOperationException();
+
+    private static JsonSerializerOptions JsonSerializerOptions => new()
+    {
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        TypeInfoResolver = new ModelJsonTypeInfoResolver()
+    };
+
+    public async Task LoadAsync(string directory, CancellationToken token)
+    {
+        var path = Path.Combine(directory, JsonName);
+        if (!File.Exists(path)) return;
+
+        await using var stream = File.OpenRead(path);
+        try
+        {
+            var type = GetType();
+            var obj = await JsonSerializer.DeserializeAsync(stream, type, JsonSerializerOptions, token);
+            if (obj == null) return;
+
+            var properties = type.GetProperties().Where(p => p is { CanRead: true, CanWrite: true }).Where(p => p.GetMethod?.IsStatic == false);
+            foreach (var property in properties)
+            {
+                try
+                {
+                    var value = property.GetValue(obj);
+                    property.SetValue(this, value);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    public async Task SaveAsync(string directory, CancellationToken token = default)
+    {
+        if (string.IsNullOrWhiteSpace(directory)) throw new ArgumentNullException(nameof(directory));
+        var path = Path.Combine(directory, JsonName);
+        await using var stream = File.Create(path);
+        await JsonSerializer.SerializeAsync(stream, this, JsonSerializerOptions, token);
+    }
+
     // workaround for hiding ObservableValidator's property
     [Browsable(false)]
-    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+    [JsonIgnore]
     public new bool HasErrors { get; set; }
 
     protected void SetPropertyReadOnly(string propertyName, bool readOnly)

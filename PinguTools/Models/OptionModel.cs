@@ -12,14 +12,7 @@ namespace PinguTools.Models;
 
 public partial class OptionModel : Model
 {
-    private const string PATH = "options.json";
-
-    private static JsonSerializerOptions JsonSerializerOptions => new()
-    {
-        WriteIndented = true,
-        PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-    };
+    protected override string JsonName => "option.json";
 
     [ObservableProperty]
     [MinLength(4)]
@@ -104,27 +97,4 @@ public partial class OptionModel : Model
     [Browsable(false)]
     [JsonIgnore]
     public partial BookDictionary Books { get; set; } = new();
-
-    public async static Task<OptionModel> LoadAsync(string directory, CancellationToken token)
-    {
-        var path = Path.Combine(directory, PATH);
-        if (!File.Exists(path)) return new OptionModel();
-        await using var stream = File.OpenRead(path);
-        try
-        {
-            return await JsonSerializer.DeserializeAsync<OptionModel>(stream, JsonSerializerOptions, token) ?? new OptionModel();
-        }
-        catch
-        {
-            return new OptionModel();
-        }
-    }
-
-    public async Task SaveAsync(string directory, CancellationToken token = default)
-    {
-        if (string.IsNullOrWhiteSpace(directory)) throw new ArgumentNullException(nameof(directory));
-        var path = Path.Combine(directory, PATH);
-        await using var stream = File.Create(path);
-        await JsonSerializer.SerializeAsync(stream, this, JsonSerializerOptions, token);
-    }
 }

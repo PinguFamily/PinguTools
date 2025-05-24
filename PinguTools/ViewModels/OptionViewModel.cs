@@ -39,7 +39,8 @@ public partial class OptionViewModel : WatchViewModel<OptionModel>
     protected async override Task<OptionModel> ReadModel(string path, IDiagnostic d, IProgress<string> p, CancellationToken ct = default)
     {
         p.Report(CommonStrings.Status_Searching);
-        var model = await OptionModel.LoadAsync(path, ct);
+        var model = new OptionModel();
+        await model.LoadAsync(path, ct);
         var books = model.Books;
 
         var walker = Directory.EnumerateFiles(path, FileGlob, SearchOption.AllDirectories);
