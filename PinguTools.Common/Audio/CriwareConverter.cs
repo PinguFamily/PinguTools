@@ -77,13 +77,13 @@ public class CriwareConverter
         await using var hcaFs = File.OpenRead(hcaPath);
         var awbEntry = new CriAfs2Entry { Stream = hcaFs };
         var awbArchive = new CriAfs2Archive { awbEntry };
-
-        await using (var awbMs = File.Create(awbPath)) awbArchive.Save(awbMs);
+        await using var awbStream = File.Open(awbPath, FileMode.Create, FileAccess.ReadWrite);
+        awbArchive.Save(awbStream);
+        awbStream.Position = 0;
 
         var streamAwbHashTbl = new CriTable();
         streamAwbHashTbl.Load((byte[])cueSheetTable.Rows[0]["StreamAwbHash"]);
 
-        await using var awbStream = File.Create(awbPath);
         var sha = await SHA1.HashDataAsync(awbStream, ct);
         streamAwbHashTbl.Rows[0]["Name"] = cueName;
         streamAwbHashTbl.Rows[0]["Hash"] = sha;
@@ -97,7 +97,7 @@ public class CriwareConverter
         cueSheetTable.Rows[0]["WaveformTable"] = waveformTable.Save();
 
         cueSheetTable.WriterSettings = CriTableWriterSettings.Adx2Settings;
-        await using (var acbMs = File.Create(acbPath)) awbArchive.Save(acbMs);
+        await using (var acbStream = File.Create(acbPath)) cueSheetTable.Save(acbStream);
     }
 }
 
